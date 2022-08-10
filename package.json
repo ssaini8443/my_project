@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "starts": "nodemon server.js",
     "serve": "node server.js",
     "watch": "mix watch"
   },
