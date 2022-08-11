@@ -358,38 +358,18 @@ changeOrderStatus(currentOrder);
 let bookbutton = document.getElementById('bookbtn');
 if (bookbutton) {
     bookbutton.addEventListener('click', () => {
-        let email = document.getElementById('full-name').value;
-        let name = document.getElementById('useremail').value;
+        let name = document.getElementById('full-name').value;
+        let email = document.getElementById('useremail').value;
 
         if (!email || !name) {
             showToast('Please fill all fields', 'fail');
 
         } else {
-            // var params = {
-            //     username: name,
-            //     useremail: email,
-            //     tableno: Math.floor(Math.random() * 10) + 1
-            // }
-
-
-            const params = {
-                username: name,
-                tableno: "22",
-                useremail: email,
-            }
-
-
-            emailjs.sendForm('default_service', 'template_22rhvli', params, '_kYG3YlGKcBRBkUwC')
-                .then((result) => {
-                    console.log(result.text);
-                }, (error) => {
-                    console.log(error.text);
-                });
-            // emailjs.send("service_yqdxii4", "template_22rhvli", {
-            //     username: name,
-            //     tableno: "22",
-            //     useremail: email,
-            // });
+        axios.post('/tablebook', { email, name }).then(res => {
+            showToast(res.data.message, 'success');
+        }).catch(err => {
+            showToast('Error in Booking Table', 'fail');
+        })
         }
     })
 }

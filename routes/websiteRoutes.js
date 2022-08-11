@@ -50,10 +50,69 @@ function websiteRoutes(app) {
 
 
     app.get('/contactus', (req, res) => { res.render('contactus') });
-    app.get('/aboutus', (req, res) => { res.render('aboutus') })
+    app.get('/aboutus', (req, res) => { res.render('aboutus') });
+
+
+    app.post('/tablebook', tablebook);
+    app.post('/tablebook', contactus);
+
+    app.post('/clearcart', clearcart);
 
 
 }
+
+async function tablebook(req, res) {
+    console.log(req.body);
+
+    const nodemailer = require('nodemailer');
+
+    var transport = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        auth: {
+            user: "orin44@ethereal.email",
+            pass: "g9xuhV35MKvhpSbJtP"
+        }
+    });
+
+    let date_ob = new Date();
+    let date = date_ob.getDate();
+    let month = date_ob.getMonth() + 1;
+    let year = date_ob.getFullYear();
+    let time = date_ob.getTime();
+    // generate random number bewteen 1 and 15
+    let random = Math.floor(Math.random() * 15) + 1;
+    const message = {
+        from: 'support@pizzapoint.me', 
+        to: req.body.email,        
+        subject: 'Table Booking', 
+        text: 'Hello, ' + req.body.name + '\n\n' + 'You have successfully booked a table for ' + date +'-'+ month+'-'+year +'  Your Table No. is '+ random+ '  Thank you for using our service.'
+    };
+
+    transport.sendMail(message, function (err, info) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(info);
+        }
+    });
+    return res.json({ success: true, message: 'Thankyou Your Table is Booked' });
+
+}
+
+
+async function contactus(req, res) {
+    const products = await Product.find({})
+    // console.log(products)
+    return res.render('cart', { products })
+}
+
+
+async function clearcart(req, res) {
+    delete req.session.shoppingCart;
+    return res.redirect('/cart');
+}
+
 
 
 // render products page
@@ -186,21 +245,21 @@ async function accDetails(req, res) {
 
 async function updateaccDetails(req, res) {
     // { username: 'user123', cpassword: 'adsf', upassword: 'afds' }
-    
-    
-    
+
+
+
     console.log(req.body);
-   
+
 
     const updateddata = {};
     if (req.body.username) {
-        updateddata.name=req.body.username
+        updateddata.name = req.body.username
     }
 
     const isPasswordValid = await bcrypt.compare(req.body.cpassword, req.session.user.password);
     if (isPasswordValid) {
         const hashedPassword = await bcrypt.hash(req.body.upassword, 8);
-        updateddata.password = hashedPassword;            
+        updateddata.password = hashedPassword;
     }
 
 
@@ -235,7 +294,8 @@ async function handleOrder(req, res) {
             address: req.body.address,
             mobile: req.body.mobile,
             userId: user._id,
-            products: req.session.shoppingCart.cartitems
+            products: req.session.shoppingCart.cartitems,
+            paymentType: req.body.paymentMode == 'card' ? 'online' : 'cod',
         });
         if (order) {
 

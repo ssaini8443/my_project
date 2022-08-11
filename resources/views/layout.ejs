@@ -113,36 +113,38 @@
               md:justify-between 
               md:pt-0">
           <li>
-            <a class="md:p-4 py-2 block hover:text-purple-400" href="/products">Our Menu</a>
+            <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/products">Our Menu</a>
           </li>
           <li>
-            <a class="md:p-4 py-2 block hover:text-purple-400" href="/contactus">Contact Us</a>
+            <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/contactus">Contact Us</a>
           </li>
           <li>
-            <a class="md:p-4 py-2 block hover:text-purple-400" href="/aboutus">About Us</a>
+            <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/aboutus">About Us</a>
           </li>
 
+          
           <% if(role=='admin' ){ %>
+          <li>
+            <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/admin/orders">Admin orders</a>
+          </li>
+          <% } %>
 
+
+          <% if(role=='user' ){ %>
             <li>
-              <a class="md:p-4 py-2 block hover:text-purple-400" href="/admin/orders">Admin Orders</a>
+              <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/orders">Your Orders</a>
             </li>
-
-            <% } else { %>
-
-              <li>
-                <a class="md:p-4 py-2 block hover:text-purple-400" href="/orders">Your Orders</a>
-              </li>
-              <% } %>
+            <% } %>
+          
 
 
 
                 <% if(user){ %>
                   <li>
-                    <a id="acc-details" class="md:p-4 py-2 block hover:text-purple-400" href="/accdetails">Account Details</a>
+                    <a id="acc-details" class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/accdetails">Account Details</a>
                   </li>
                   <li>
-                    <a id="logout-user" class="md:p-4 py-2 block hover:text-purple-400" href="/logout">Logout</a>
+                    <a id="logout-user" class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/logout">Logout</a>
                   </li>
                   
                   
@@ -150,10 +152,10 @@
                   <% } else { %>
 
                     <li>
-                      <a class="md:p-4 py-2 block hover:text-purple-400" href="/login">Login</a>
+                      <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/login">Login</a>
                     </li>
                     <li>
-                      <a class="md:p-4 py-2 block hover:text-purple-400" href="/register">Register</a>
+                      <a class="md:p-4 py-2 block text-black uppercase font-bold hover:text-orange-400" href="/register">Register</a>
                     </li>
                     
 
@@ -161,7 +163,7 @@
                     <% } %>
                     
 
-                    <li><a class="md:p-4 py-2 block hover:text-purple-400" href="/cart"><i
+                    <li><a class="md:p-4 py-2 block hover:text-orange-400" href="/cart"><i
                       class="fa-solid fa-cart-shopping fa-xl"><span class="relative"><span id="cart-counter-icon"
                           class="absolute -top-3 -right-3 bg-red-500 text-red-50 py-1 px-2 text-xs rounded ml-1">
                           <%= current.shoppingCart ? current.shoppingCart.totalitems : 0; %>
@@ -267,7 +269,7 @@
               PHONE - +1 647 123 789 0 , +1 456 741 852 0
             </p>
             <p class="mt-4 text-sm text-deep-purple-50">
-              EMAIL - support@support.com.com
+              EMAIL - support@pizzapoiint.com
             </p>
           </div>
         </div>

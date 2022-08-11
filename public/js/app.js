@@ -2726,31 +2726,20 @@ var bookbutton = document.getElementById('bookbtn');
 
 if (bookbutton) {
   bookbutton.addEventListener('click', function () {
-    var email = document.getElementById('full-name').value;
-    var name = document.getElementById('useremail').value;
+    var name = document.getElementById('full-name').value;
+    var email = document.getElementById('useremail').value;
 
     if (!email || !name) {
       showToast('Please fill all fields', 'fail');
     } else {
-      // var params = {
-      //     username: name,
-      //     useremail: email,
-      //     tableno: Math.floor(Math.random() * 10) + 1
-      // }
-      var params = {
-        username: name,
-        tableno: "22",
-        useremail: email
-      };
-      emailjs.sendForm('default_service', 'template_22rhvli', params, '_kYG3YlGKcBRBkUwC').then(function (result) {
-        console.log(result.text);
-      }, function (error) {
-        console.log(error.text);
-      }); // emailjs.send("service_yqdxii4", "template_22rhvli", {
-      //     username: name,
-      //     tableno: "22",
-      //     useremail: email,
-      // });
+      axios.post('/tablebook', {
+        email: email,
+        name: name
+      }).then(function (res) {
+        showToast(res.data.message, 'success');
+      })["catch"](function (err) {
+        showToast('Error in Booking Table', 'fail');
+      });
     }
   });
 }

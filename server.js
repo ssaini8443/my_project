@@ -75,7 +75,7 @@ app.set('view engine', 'ejs');
 
 require('./routes/websiteRoutes')(app);
 app.use((req,res)=>{
-    res.status(404).send('404  Not Found');
+    res.redirect('/');
 })
 
 
