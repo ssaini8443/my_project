@@ -1,5 +1,4 @@
-// 542283440521-2sgfetvher2nu6fullk22a4ish600hgs.apps.googleusercontent.com
-// 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
+
 
 const express = require('express');
 const mongoose  = require('mongoose');

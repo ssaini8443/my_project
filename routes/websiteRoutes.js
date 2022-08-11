@@ -108,6 +108,7 @@ async function registerUser(req, res) {
 
 async function loginUser(req, res) {
 
+    console.log(req.body);
     try {
 
         const user = await User.findOne({ email: req.body.email });
