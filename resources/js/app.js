@@ -375,6 +375,38 @@ if (bookbutton) {
 }
 
 
+
+let contactbutton = document.getElementById('contactbtn');
+if (contactbutton) {
+    contactbutton.addEventListener('click', () => {
+        let contactname = document.getElementById('contact-name').value;
+        let contactemail = document.getElementById('contact-email').value;
+        let contactmessage = document.getElementById('contact-message').value;
+
+        if (!contactname || !contactemail || !contactmessage) {
+            showToast('Please fill all fields', 'fail');
+
+        } else {
+            
+        axios.post('/contactus', { contactname, contactemail , contactmessage }).then(res => {
+            showToast(res.data.message, 'success');
+        }).catch(err => {
+            showToast('Error in Booking Table', 'fail');
+        })
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 let card = null;
 var stripe = Stripe('pk_test_51LUftwJtISoo51qMJHG9ioPuNLM6F1w9jl33cFim0MjGlqb3qiFcTQSLsIJ88vXEyCwf9FEORiJaQntkauA72RId00UkooxyAJ');
 function stripeWidget(params) {

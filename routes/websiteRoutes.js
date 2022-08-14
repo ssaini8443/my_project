@@ -54,7 +54,7 @@ function websiteRoutes(app) {
 
 
     app.post('/tablebook', tablebook);
-    app.post('/tablebook', contactus);
+    app.post('/contactus', contactus);
 
     app.post('/clearcart', clearcart);
 
@@ -70,24 +70,29 @@ async function tablebook(req, res) {
         host: "smtp.ethereal.email",
         port: 587,
         auth: {
-            user: "orin44@ethereal.email",
-            pass: "g9xuhV35MKvhpSbJtP"
+            user: 'gail22@ethereal.email',
+            pass: 'u33UnT9KXy4NSqjuRW'
         }
     });
+
+    console.log(transport);
 
     let date_ob = new Date();
     let date = date_ob.getDate();
     let month = date_ob.getMonth() + 1;
     let year = date_ob.getFullYear();
     let time = date_ob.getTime();
-    // generate random number bewteen 1 and 15
+    
     let random = Math.floor(Math.random() * 15) + 1;
+    const email = req.body.email;
+    const name = req.body.name;
     const message = {
         from: 'support@pizzapoint.me', 
-        to: req.body.email,        
+        to: email,        
         subject: 'Table Booking', 
-        text: 'Hello, ' + req.body.name + '\n\n' + 'You have successfully booked a table for ' + date +'-'+ month+'-'+year +'  Your Table No. is '+ random+ '  Thank you for using our service.'
+        text: 'Hello, ' + name + '\n\n' + 'You have successfully booked a table for ' + date +'-'+ month+'-'+year +'  Your Table No. is '+ random+ '  Thank you for using our service.'
     };
+
 
     transport.sendMail(message, function (err, info) {
         if (err) {
@@ -102,9 +107,36 @@ async function tablebook(req, res) {
 
 
 async function contactus(req, res) {
-    const products = await Product.find({})
-    // console.log(products)
-    return res.render('cart', { products })
+    console.log(req.body);
+
+    const nodemailer = require('nodemailer');
+
+    var transport = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        auth: {
+            user: "gail22@ethereal.email",
+            pass: "u33UnT9KXy4NSqjuRW"
+        }
+    });
+
+
+    let random = Math.floor(Math.random() * 10000) + 1;
+    const message = {
+        from: 'support@pizzapoint.me', 
+        to: req.body.contactemail,        
+        subject: 'Feedback', 
+        text: 'Hello, ' + req.body.contactname + '\n\n' + 'Thankyou For Your Feedback.We are working on your issue and will get back to you soon.'+ '\n\n '+' Your Ticket No. is '+ random
+    };
+
+    transport.sendMail(message, function (err, info) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(info);
+        }
+    });
+    return res.json({ success: true, message: 'Thankyou For Your Feedback' });
 }
 
 
